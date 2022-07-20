@@ -16,13 +16,17 @@ return new class extends Migration
         Schema::create('real_estates', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('SKU');
             $table->float('price',9,3);
+            $table->integer('area');
+            $table->integer('bed');
+            $table->integer('bath');
+            $table->string('phone');
+            $table->string('address');
+            $table->string('email');
             $table->string('short_desc');
             $table->string('desc');
             $table->string('photo_gallery');
             $table->string('image');
-            $table->string('tag');
             $table->integer('in_stock')->nullable()->default(0);
             $table->integer('status')->nullable()->default(0);
             $table->timestamps();
