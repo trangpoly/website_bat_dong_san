@@ -13,11 +13,22 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('categories_real_estate', function (Blueprint $table) {
+        Schema::create('realty', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->decimal('price',12,3);
+            $table->integer('bed');
+            $table->integer('bath');
+            $table->string('phone');
+            $table->string('address');
+            $table->string('email');
+            $table->string('short_desc');
+            $table->text('desc');
+            $table->text('photo_gallery');
             $table->string('image');
+            $table->integer('in_stock')->nullable()->default(0);
             $table->integer('status')->nullable()->default(0);
+            $table->integer('category_realty_id');
             $table->timestamps();
         });
     }
@@ -29,6 +40,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories_real_estate');
+        Schema::dropIfExists('realty');
     }
 };

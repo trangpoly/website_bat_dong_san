@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('title');
             $table->string('image');
             $table->string('content');
-            $table->string('tag');
             $table->integer('status')->nullable()->default(0);
+            $table->integer('category_new_id');
             $table->timestamps();
         });
     }
