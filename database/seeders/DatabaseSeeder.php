@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -26,7 +27,7 @@ class DatabaseSeeder extends Seeder
             $userSeed[] = [
                 "name" => "Phạm Poly",
                 "email" => "poly$i@gmail.com",
-                "password" => "123456",
+                "password" => Hash::make("123456"),
                 "avatar" => "https://www.pngall.com/wp-content/uploads/12/Avatar-Profile.png",
                 "address" => "Hà Nội",
                 "role" => 0,
@@ -57,7 +58,7 @@ class DatabaseSeeder extends Seeder
                     "https://bizweb.dktcdn.net/thumb/1024x1024/100/328/080/products/16.jpg?v=1534254237630",
                     "https://bizweb.dktcdn.net/thumb/1024x1024/100/328/080/products/ss.png?v=1534254242320",
                     "https://bizweb.dktcdn.net/100/328/080/products/2a6b6f5c3983a4f979910978d28ec7-863b57ec-7edc-495f-bf32-a0bb14cf8797.jpg?v=1534254242320"
-                ]',
+                ]', 
                 "image" => "https://bizweb.dktcdn.net/100/328/080/products/15.jpg?v=1534254237630",
                 "in_stock" => 0,
                 "status" => 0,
