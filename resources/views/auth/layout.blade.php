@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Star Admin2 </title>
+  <title>@yield('title')</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="{{asset('auth/vendors/feather/feather.css')}}">
   <link rel="stylesheet" href="{{asset('auth/vendors/mdi/css/materialdesignicons.min.css')}}">
@@ -373,7 +373,7 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link" href="{{url('/admin')}}">
+            <a class="nav-link" href="{{route('route_Dashboard_index')}}">
               <i class="mdi mdi-grid-large menu-icon"></i>
               <span class="menu-title">Dashboard</span>
             </a>
@@ -388,8 +388,8 @@
             </a>
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{route('route_CateRealy_list')}}">Danh mục</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{route('route_Realy_list')}}">Bất động sản</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{route('route_CateRealty_list')}}">Danh mục</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{route('route_Realty_list')}}">Bất động sản</a></li>
               </ul>
             </div>
           </li>

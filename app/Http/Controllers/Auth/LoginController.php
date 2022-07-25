@@ -36,7 +36,7 @@ class LoginController extends Controller
             $password = $request->input('password');
             //Ktra đăng nhập
             if(Auth::attempt(['email'=>$email,'password'=>$password])){
-                return redirect('admin');
+                return redirect('admin/dashboard');
             }
             else{
                 Session::flash('error','Email hoặc Password không đúng');

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('price',12,3);
             $table->integer('bed');
             $table->integer('bath');
+            $table->float('area');
             $table->string('phone');
             $table->string('address');
             $table->string('email');

@@ -49,6 +49,7 @@ class DatabaseSeeder extends Seeder
                 "price" => 200000000,
                 "bed" => 3,
                 "bath" => 2,
+                "area" => 200.5,
                 "phone" => "0123456789",
                 "address" => "Hà Nội",
                 "email" => "bds$i@gmail.com",
