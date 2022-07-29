@@ -22,6 +22,9 @@
   <link rel="stylesheet" href="{{asset('auth/css/vertical-layout-light/style.css')}}">
   <!-- endinject -->
   <link rel="shortcut icon" href="{{asset('auth/images/favicon.png')}}" />
+  <!--Checkeditor-->
+  <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
+  <script src="https://cdn.ckbox.io/CKBox/1.1.0/ckbox.js"></script>
 </head>
 <body>
   <div class="container-scroller"> 
@@ -459,6 +462,30 @@
   <script src="{{asset('auth/js/dashboard.js')}}"></script>
   <script src="{{asset('auth/js/Chart.roundedBarCharts.js')}}"></script>
   <!-- End custom js for this page-->
+  <script src="{{asset('auth/js/bootstrap.min.js')}}"></script>
+
+  <!--Checkeditor-->
+  <script>
+    ClassicEditor
+    .create( document.querySelector( '#editor' ), {
+    ckbox: {
+    tokenUrl: "https://90995.cke-cs.com/token/dev/KV1ibI6ewROOAPQkhUdwFlgyILLwxfI1GuyZ?limit=10",
+    },
+    toolbar: [
+    'ckbox', 'imageUpload', 'mediaEmbed', 'audioUpload', 
+    '|', 'heading', 
+    '|', 'undo', 'redo', 
+    '|', 'bold', 'italic', 
+    '|', 'blockQuote', 'indent', 'link', 
+    '|', 'bulletedList', 'numberedList', 'insertTable'
+    ],
+    } )
+    .catch( error => {
+    console.error( error );
+    } );
+    </script>
+
+
 </body>
 
 </html>

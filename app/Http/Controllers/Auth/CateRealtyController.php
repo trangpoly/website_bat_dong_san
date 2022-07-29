@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CateRealtyRequest;
 use App\Models\CateRealty;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CateRealtyController extends Controller
 {
@@ -21,5 +23,52 @@ class CateRealtyController extends Controller
         $objCateRealty = new CateRealty();
         $this->v['listCateRealty'] = $objCateRealty->LoadListWithPager($this->v['extParams']);
         return view('auth.cate-realty.list',$this->v);
+    }
+
+    public function add(CateRealtyRequest $request){
+        $this->v['title'] = "Thêm mới Danh mục Bất động sản";
+
+        $method_route = 'route_CateRealty_add';
+        if($request->isMethod('post')){
+            $params = [];
+            // dd($request->post());
+            $params['cols'] = array_map(function($item){
+                if($item == 'null'){
+                    $item = null;
+                }
+                if(is_string($item)){
+                    $item = trim($item);
+                }
+                return $item;
+            },
+            $request->post());
+            unset($params['cols']['_token']);
+            // dd($params);
+            $modelCateRealty = new CateRealty();
+            $img = $request->file('image');
+            $pathImg = 'images/cate-realty/'.trim($img->getClientOriginalName());
+            // dd($pathImg);
+            $modelCateRealty->image = $pathImg;
+            $res = $modelCateRealty->saveNew($params,$pathImg);
+            if($res==null){
+                redirect()->route($method_route);
+            }
+            elseif ($res > 0){
+                Session::flash('success','Thêm mới thành công!');
+            }
+            else {
+                Session::flash('error','Thêm mới thất bại!');
+                redirect()->route($method_route);
+            }
+
+        }
+        return view('auth.cate-realty.add',$this->v);
+    }
+    //EDIT:
+    public function edit($id, CateRealtyRequest $request){
+        $this->v['title'] = "Cập nhật Banner";
+        $objCateRealty = new CateRealty();
+        $this->v['cateRealty'] = $objCateRealty->detail($id);
+        return view('auth.cate-realty.edit',$this->v);
     }
 }

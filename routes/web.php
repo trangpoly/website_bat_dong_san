@@ -29,10 +29,16 @@ Route::get('/signout', ['as' =>'signout','uses'=>'App\Http\Controllers\Auth\Logi
 Route::middleware(['auth'])->prefix('/admin')->group(function(){
     Route::get('dashboard',[DashboardController::class,'index'])->name('route_Dashboard_index');
     Route::get('categotiesRealty',[CateRealtyController::class,'list'])->name('route_CateRealty_list');
+        Route::match(['get', 'post'], 'categotiesRealty/add', [CateRealtyController::class,'add'])->name('route_CateRealty_add');
+        Route::match(['get','post'], '/categotiesRealty/edit/{id}', [CateRealtyController::class,'edit'])->name('route_CateRealty_Edit');
     Route::get('realty',[RealtyController::class,'list'])->name('route_Realty_list');
     Route::get('categotiesNew',[CateNewController::class,'list'])->name('route_CateNew_list');
+        Route::match(['get', 'post'], 'categotiesNew/add', [CateNewController::class,'add'])->name('route_CateNew_add');
+        Route::match(['get', 'post'], 'categotiesNew/edit/{id}', [CateNewController::class,'edit'])->name('route_CateNew_edit');
     Route::get('new',[NewController::class,'list'])->name('route_New_list');
     Route::get('banner',[BannerController::class,'list'])->name('route_Banner_list');
+        Route::match(['get', 'post'], 'banner/add', [BannerController::class,'add'])->name('route_Banner_add');
+        Route::match(['get','post'], '/banner/edit/{id}', [BannerController::class,'edit'])->name('route_Banner_Edit');
     Route::get('user',[UserController::class,'list'])->name('route_User_list');
 });
 
