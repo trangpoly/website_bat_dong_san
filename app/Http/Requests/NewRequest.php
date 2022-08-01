@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CateNewRequest extends FormRequest
+class NewRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,18 +27,20 @@ class CateNewRequest extends FormRequest
         $currentAction = $this->route()->getActionMethod();
         // dd($currentAction);
         switch ($this->method()):
-            case 'POST':
-                switch ($currentAction){
+            case 'POST': 
+                switch($currentAction){
                     case 'add':
                         $rules = [
-                            'title' => "required|unique:categories_new", 
+                            'title' => "required|unique:news",
                             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                            'content' => 'required'
                         ];
                         break;
                     case 'update':
                         $rules = [
-                            'title' => "required", 
+                            'title' => "required",
                             // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                            'content' => 'required'
                         ];
                         break;
                     default:
@@ -53,10 +55,10 @@ class CateNewRequest extends FormRequest
     public function messages()
     {
         return [
-            "title.required" => "Tên danh mục là bắt buộc",
-            "title.unique" => "Tên danh mục đã tồn tại",
-            "image.required" => "Ảnh danh mục là bắt buộc",
-
+            "title.required" => "Tiêu đề là bắt buộc",
+            "title.unique" => "Tiêu đề tin tức đã tồn tại",
+            "image.required" => "Ảnh đại diện là bắt buộc",
+            "content.required" => "Nội dung tin tức là bắt buộc"
         ];
     }
 }

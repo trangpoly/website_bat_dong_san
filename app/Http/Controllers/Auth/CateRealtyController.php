@@ -17,9 +17,9 @@ class CateRealtyController extends Controller
     }
 
     public function list(Request $request){
-        $this->v['title'] = "Danh mục Bất động sản";
+        $this->v['title'] = "Danh sách Danh mục Bất động sản";
         $this->v['extParams'] = $request->all();
-
+        $this->v['index'] = 1;
         $objCateRealty = new CateRealty();
         $this->v['listCateRealty'] = $objCateRealty->LoadListWithPager($this->v['extParams']);
         return view('auth.cate-realty.list',$this->v);
@@ -64,11 +64,52 @@ class CateRealtyController extends Controller
         }
         return view('auth.cate-realty.add',$this->v);
     }
-    //EDIT:
-    public function edit($id, CateRealtyRequest $request){
-        $this->v['title'] = "Cập nhật Banner";
+    //DETAIL:
+    public function detail($id, CateRealtyRequest $request){
+        $this->v['title'] = "Cập nhật Danh mục Bất động sản";
         $objCateRealty = new CateRealty();
         $this->v['cateRealty'] = $objCateRealty->detail($id);
-        return view('auth.cate-realty.edit',$this->v);
+        return view('auth.cate-realty.detail',$this->v);
+    }
+
+    //UPDATE
+    public function update($id, CateRealtyRequest $request){
+        $method_route = "route_CateRealty_Detail";
+        $params=[];
+        //Lọc dữ liệu
+        $params['cols'] = array_map(function($item){
+            if($item == ""){
+                $item = null;
+            }
+            if(is_string($item)){
+                $item = trim($item);
+            }
+            return $item;
+        }, 
+        $request->post());
+        //
+        unset($params['cols']['_token']);
+        $params['cols']['id'] = $id;
+        $cateRealty = new CateRealty();
+        $img = $request->file('image');
+        // dd($img);
+        if($img == null){
+            $res = $cateRealty->saveUpdate($params);
+        }
+        else {
+            $pathImg = 'images/cate-realty/'.trim($img->getClientOriginalName());
+            $res = $cateRealty->saveUpdate($params,$pathImg);
+        }
+        if($res==null){
+            return redirect()->route($method_route,['id'=>$id]);
+        }
+        elseif ($res > 0){
+            Session::flash('success',"Cập nhật thành công!");
+            return redirect()->route($method_route,['id'=>$id]);
+        }
+        else {
+            Session::flash('error',"Cập nhật thất bại");
+            return redirect()->route($method_route,['id'=>$id]);
+        }
     }
 }

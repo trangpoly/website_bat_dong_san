@@ -8,28 +8,52 @@
                 <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">{{$title}}</h4>
-                    <form class="form-sample" class="form-sample" action="" method="POST"  enctype="multipart/form-data">
+                    <form class="form-sample"  class="form-sample" action="{{route('route_New_Update',['id'=>request()->route('id')])}}" method="POST"  enctype="multipart/form-data">
                         @csrf
-                        <div class="row">
-                            <div class="form-group">
+                    <div class="row" id="form">
+                        <div class="col-md-12">
+                            <div class="form-group row">
                                 <label>Tiêu đề</label>
-                                <input type="text" class="form-control" name="title"/>
+                                <div class="col-sm-10">
+                                <input type="text" class="form-control" name="title" value="{{$new->title}}"/>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>Ảnh</label>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label>Ảnh đại diện</label>
+                                <div class="col-4 m-2 row">
+                                    <img src="{{asset($new->image)}}" alt="">
+                                </div>
                                 <div class="input-group col-xs-12">
                                     <input type="file" name="image" class="form-control file-upload-info"/>
                                 </div>
-                                
-                            </div>
-                            <div class="form-group">
-                                <label>Mô tả</label>
-                                <input type="text" class="form-control" name="desc" />
-
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary me-2">Thêm mới</button>
-                        <button class="btn btn-light">Hủy</button>
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label>Danh mục Tin tức</label>
+                                <div class="col-sm-5">
+                                <select class="form-control" style="line-height: 2" name="category_new_id">
+                                    @foreach ($listCate as $item)
+                                        <option value="{{$item->id}}">{{$item->title}}</option>
+                                    @endforeach
+                                </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Nội dung</label>
+                                <div class="col-sm-12">
+                                    <textarea class="ckeditor" name="content" id="editor">{{$new->content}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <button type="submit" class="btn btn-primary me-2">Cập nhật</button>
+                    <button class="btn btn-light">Hủy</button>
                     </form>
                     <?php //Hiển thị thông báo thành công?>
                     @if ( Session::has('success') )
@@ -69,8 +93,8 @@
         </div> 
     </div> 
 </div> 
+
+<script src="{{asset('auth/js/add_form.js')}}"></script>
 @endsection
-
-
             
             

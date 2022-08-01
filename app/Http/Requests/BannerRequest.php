@@ -31,8 +31,15 @@ class BannerRequest extends FormRequest
                 switch ($currentAction){
                     case 'add':
                         $rules = [
-                            'title' => "required", 
+                            'title' => "required|unique:banners", 
                             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                            'desc' =>"required"
+                        ];
+                        break;
+                    case 'update':
+                        $rules = [
+                            'title' => "required", 
+                            // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                             'desc' =>"required"
                         ];
                         break;
@@ -48,8 +55,9 @@ class BannerRequest extends FormRequest
     public function messages()
     {
         return [
-            "title.required" => "Tên danh mục là bắt buộc",
-            "image.required" => "Ảnh danh mục là bắt buộc",
+            "title.required" => "Tên Banner là bắt buộc",
+            "title.unique" => "Tên Banner đã tồn tại",
+            "image.required" => "Ảnh Banner mục là bắt buộc",
             "desc.required" => "Mô tả là bắt buộc",
         ];
     }

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CateNewRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,25 +25,22 @@ class CateNewRequest extends FormRequest
     {
         $rules = [];
         $currentAction = $this->route()->getActionMethod();
-        // dd($currentAction);
         switch ($this->method()):
             case 'POST':
                 switch ($currentAction){
                     case 'add':
                         $rules = [
-                            'title' => "required|unique:categories_new", 
-                            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                        ];
-                        break;
-                    case 'update':
-                        $rules = [
-                            'title' => "required", 
-                            // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                            "name" => 'required',
+                            "email" => 'required|email',
+                            "password" => 'required',
+                            "avatar" => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                            "address" => 'required',
+                            "role" => 'required'
                         ];
                         break;
                     default:
                         break;
-                }
+                } 
                 break;
             default:
                 break;
@@ -53,10 +50,13 @@ class CateNewRequest extends FormRequest
     public function messages()
     {
         return [
-            "title.required" => "Tên danh mục là bắt buộc",
-            "title.unique" => "Tên danh mục đã tồn tại",
-            "image.required" => "Ảnh danh mục là bắt buộc",
-
+            "name.required" => "Họ và tên là bắt buộc",
+            "email.required" => "Email là bắt buộc",
+            "email.email" => "Email chưa đúng định dạng",
+            "password.required" => "Password là bắt buộc",
+            "avatar.required" => "Ảnh đại diện là bắt buộc",
+            "address.required" => "Địa chỉ là bắt buộc",
+            "role.required" => "Phân quyền là bắt buộc"
         ];
     }
 }

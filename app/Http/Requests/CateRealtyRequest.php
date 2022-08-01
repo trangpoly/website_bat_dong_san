@@ -31,8 +31,14 @@ class CateRealtyRequest extends FormRequest
                 switch ($currentAction){
                     case 'add':
                         $rules = [
-                            'title' => "required", 
+                            'title' => "required|unique:categories_realty", 
                             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                        ];
+                        break;
+                    case 'update':
+                        $rules = [
+                            'title' => "required", 
+                            // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                         ];
                         break;
                     default:
@@ -48,6 +54,7 @@ class CateRealtyRequest extends FormRequest
     {
         return [
             "title.required" => "Tên danh mục là bắt buộc",
+            "title.unique" => "Tên danh mục đã tồn tại",
             "image.required" => "Ảnh danh mục là bắt buộc",
 
         ];

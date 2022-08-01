@@ -17,6 +17,7 @@
     },
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "^34.2.0",
-        "@ckeditor/ckeditor5-easy-image": "^34.2.0"
+        "@ckeditor/ckeditor5-easy-image": "^34.2.0",
+        "ckeditor": "^4.12.1"
     }
 }

@@ -7,7 +7,7 @@
             <div class="col-12 grid-margin">
                 <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Thêm mới Danh mục Bất động sản</h4>
+                    <h4 class="card-title">{{$title}}</h4>
                     <form class="form-sample" action="" method="POST"  enctype="multipart/form-data">
                         @csrf
                         <div class="row">

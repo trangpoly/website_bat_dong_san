@@ -7,8 +7,8 @@
             <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                        <h4 class="card-title">Danh sách Banner</h4>
-                        <a href="{{route('route_Banner_add')}}" class="btn btn-outline-primary btn-fw">Thêm mới</a>
+                        <h4 class="card-title">{{$title}}</h4>
+                        <a href="{{route('route_Banner_Add')}}" class="btn btn-outline-primary btn-fw">Thêm mới</a>
                         <div class="table-responsive">
                             <table class="table table-hover">
                             <thead>
@@ -23,11 +23,11 @@
                             <tbody>
                                 @foreach ($listBanner as $item)
                                     <tr>
-                                        <td>{{$item->id}}</td>
+                                        <td>{{$index++}}</td>
                                         <td>{{$item->title}}</td>
                                         <td><img src="{{asset($item->image)}}" alt=""></td>
                                         <td>{{$item->desc}}</td>
-                                        <td><a href="{{route("route_Banner_Edit",$item->id)}}" class="hover-icon-active-del"><i class="mdi mdi-pen"></i></a></td>
+                                        <td><a href="{{route("route_Banner_Detail",$item->id)}}" class="hover-icon-active-del"><i class="mdi mdi-pen"></i></a></td>
                                         <td><a href="#" class="hover-icon-active-edit"><i class="mdi mdi-delete"></i></a></td>
                                     </tr>
                                 @endforeach

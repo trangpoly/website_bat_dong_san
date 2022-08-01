@@ -7,8 +7,8 @@
             <div class="col-12 grid-margin">
                 <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Cập nhật Danh mục Bất động sản</h4>
-                    <form class="form-sample" action="" method="POST"  enctype="multipart/form-data">
+                    <h4 class="card-title">{{$title}}</h4>
+                    <form class="form-sample" action="{{route('route_CateRealty_Update',['id'=>request()->route('id')])}}" method="POST"  enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="form-group">
@@ -23,7 +23,7 @@
                                 <input type="file" name="image" class="form-control file-upload-info"/>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary me-2">Thêm mới</button>
+                        <button type="submit" class="btn btn-primary me-2">Cập nhật</button>
                         <button class="btn btn-light">Hủy</button>
                     </form>
             <?php //Hiển thị thông báo thành công?>

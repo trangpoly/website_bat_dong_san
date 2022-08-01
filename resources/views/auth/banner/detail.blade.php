@@ -7,8 +7,8 @@
             <div class="col-12 grid-margin">
                 <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Cập nhật Banner</h4>
-                    <form class="form-sample" class="form-sample" action="" method="POST"  enctype="multipart/form-data">
+                    <h4 class="card-title">{{$title}}</h4>
+                    <form class="form-sample" class="form-sample" action="{{route('route_Banner_Update',['id'=>request()->route('id')])}}" method="POST"  enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="form-group">
@@ -20,7 +20,6 @@
                                 <div class="col-4 m-2 row">
                                     <img src="{{asset($banner->image)}}" alt="">
                                 </div>
-                                
                                 <div class="input-group col-xs-12">
                                     <input type="file" name="image" class="form-control file-upload-info"/>
                                 </div>

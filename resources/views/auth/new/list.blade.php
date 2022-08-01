@@ -1,3 +1,6 @@
+<?php 
+use App\Models\News;
+?>
 @extends('auth.layout')
 @section('title',$title)
 @section('content')
@@ -7,8 +10,8 @@
             <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                        <h4 class="card-title">Danh sách Tin Tức</h4>
-                        <button type="button" class="btn btn-outline-primary btn-fw">Thêm mới</button>
+                        <h4 class="card-title">{{$title}}</h4>
+                        <a href="{{route('route_New_Add')}}" type="button" class="btn btn-outline-primary btn-fw">Thêm mới</a>
                         <div class="table-responsive">
                             <table class="table table-hover">
                             <thead>
@@ -19,16 +22,16 @@
                                     <th>Danh mục</th>
                                     <th colspan="2">Hành động</th>
                                 </tr>
-                            </thead>
+                            </thead> 
                             <tbody>
                                 @foreach ($listNew as $item)
                                 <tr>
-                                    <td>{{$item->id}}</td>
+                                    <td>{{$index ++}}</td>
                                     <td>{{$item->title}}</td>
-                                    <td><img src="{{$item->image}}" alt=""></td>
-                                    <td>{{$item->category_new_id}}</td>
-                                    <td><a href="#" class="hover-icon-active-del"><i class="mdi mdi-delete"></i></a></td>
-                                    <td><a href="#" class="hover-icon-active-edit"><i class="mdi mdi-pen"></i></a></td>
+                                    <td><img src="{{asset($item->image)}}" alt=""></td>
+                                    <td>{{News::find($item->category_new_id)->getCate->title}}</td>
+                                    <td><a href="{{route("route_New_Detail",$item->id)}}" class="hover-icon-active-del"><i class="mdi mdi-pen"></i></a></td>
+                                    <td><a href="#" class="hover-icon-active-edit"><i class="mdi mdi-delete"></i></a></td>
                                 </tr>
                             @endforeach
                             </tbody>

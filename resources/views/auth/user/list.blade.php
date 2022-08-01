@@ -8,9 +8,7 @@
                     <div class="card">
                         <div class="card-body">
                         <h4 class="card-title">Danh sách Người dùng</h4>
-                        <p class="card-description">
-                            Add class <code>.table-hover</code>
-                        </p>
+                        <a href="{{route('route_User_Add')}}" class="btn btn-outline-primary btn-fw">Thêm mới</a>
                         <div class="table-responsive">
                             <table class="table table-hover">
                             <thead>
@@ -26,9 +24,9 @@
                             <tbody>
                                 @foreach ($listUser as $item)
                                     <tr>
-                                        <td>{{$item->id}}</td>
+                                        <td>{{$index ++}}</td>
                                         <td>{{$item->name}}</td>
-                                        <td><img src="{{$item->avatar}}" alt=""></td>
+                                        <td><img src="{{asset($item->avatar)}}" alt=""></td>
                                         <td>{{$item->email}}</td>
                                         <td>{{$item->role===0?"Admin":"Nhân viên"}}</td>
                                         <td><a href="#" class="hover-icon-active-del"><i class="mdi mdi-delete"></i></a></td>

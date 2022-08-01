@@ -7,8 +7,8 @@
             <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                        <h4 class="card-title">Danh sách Bất động sản</h4>
-                        <button type="button" class="btn btn-outline-primary btn-fw">Thêm mới</button>
+                        <h4 class="card-title">{{$title}}</h4>
+                        <a href="{{route('route_Realty_Add')}}" type="button" class="btn btn-outline-primary btn-fw">Thêm mới</a>
                         <div class="table-responsive">
                             <table class="table table-hover">
                             <thead>
@@ -24,13 +24,13 @@
                             <tbody>
                                 @foreach ($listRealty as $item)
                                     <tr>
-                                        <td>{{$item->id}}</td>
+                                        <td>{{$index ++}}</td>
                                         <td>{{$item->title}}</td>
-                                        <td><img src="{{$item->image}}" alt=""></td>
+                                        <td><img src="{{asset($item->image)}}" alt=""></td>
                                         <td>{{$item->price}}</td>
                                         <td>{{$item->category_realty_id}}</td>
-                                        <td><a href="#" class="hover-icon-active-del"><i class="mdi mdi-delete"></i></a></td>
-                                        <td><a href="#" class="hover-icon-active-edit"><i class="mdi mdi-pen"></i></a></td>
+                                        <td><a href="{{route("route_Realty_Detail",$item->id)}}" class="hover-icon-active-del"><i class="mdi mdi-pen"></i></a></td>
+                                    <td><a href="#" class="hover-icon-active-edit"><i class="mdi mdi-delete"></i></a></td>
                                     </tr>
                                 @endforeach
                             </tbody>

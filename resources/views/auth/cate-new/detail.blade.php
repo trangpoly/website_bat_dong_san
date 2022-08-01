@@ -7,8 +7,8 @@
             <div class="col-12 grid-margin">
                 <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Cập nhật Danh mục Tin tức</h4>
-                    <form class="form-sample" action="" method="POST"  enctype="multipart/form-data">
+                    <h4 class="card-title">{{$title}}</h4>
+                    <form class="form-sample" action="{{route('route_CateNew_Update',['id'=>request()->route('id')])}}" method="POST"  enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="form-group">

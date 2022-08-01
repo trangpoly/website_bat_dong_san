@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -54,5 +55,14 @@ class User extends Authenticatable
                 ->select($this->fillable);
         $listUsers = $query->paginate(5);
         return $listUsers;
+    }
+    public function saveNew($params=[],$path){
+        $data = array_merge($params['cols'],[
+            'avatar' => $path,
+            'created_at' => Date::now(),
+            'updated_at' => Date::now()
+        ]);
+        $res = DB::table($this->table)->insertGetId($data);
+        return $res;
     }
 }

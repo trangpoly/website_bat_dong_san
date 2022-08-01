@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
                 "password" => Hash::make("123456"),
                 "avatar" => "https://www.pngall.com/wp-content/uploads/12/Avatar-Profile.png",
                 "address" => "Hà Nội",
-                "role" => 0,
+                "role" => 0, //0 là admin 1 là nhân viên
                 "status" => 0,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')

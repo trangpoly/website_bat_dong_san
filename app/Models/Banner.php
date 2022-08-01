@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class Banner extends Model
 {
@@ -27,7 +28,7 @@ class Banner extends Model
             'created_at' => Date::now(),
             'updated_at' => Date::now()
         ]);
-        $res = DB::table('banners')->insertGetId($data);
+        $res = DB::table($this->table)->insertGetId($data);
         return $res;
     }
     //DETAIL:
@@ -37,5 +38,38 @@ class Banner extends Model
 
         $obj = $query->first();
         return $obj;
+    }
+    //UPDATE
+    public function saveUpdate($params, $path=[]){
+        if(empty($params['cols']['id'])){
+            Session::flash('error', "Không xác định bản ghi cập nhật");
+            return null;
+        }
+        if($path==null){
+            $dataUpdate = array_merge($params['cols'],[
+                'created_at' => Date::now(),
+                'updated_at' => Date::now()
+            ]);
+        }
+        else {
+            $dataUpdate = array_merge($params['cols'],[
+                'image' => $path,
+                'created_at' => Date::now(),
+                'updated_at' => Date::now()
+            ]);
+        }
+        
+        //Lọc dữ liệu
+        foreach($params['cols'] as $colName => $val){
+            if($colName == 'id') continue;
+            if(in_array($colName, $this->fillable)){
+                $dataUpdate[$colName] = (strlen($val) == 0) ? null : $val;
+            }
+        }
+        $res = DB::table($this->table)
+                ->where('id',$params['cols']['id'])
+                ->update($dataUpdate);
+        return $res;
+
     }
 }

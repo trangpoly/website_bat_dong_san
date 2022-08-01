@@ -25,6 +25,22 @@
   <!--Checkeditor-->
   <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
   <script src="https://cdn.ckbox.io/CKBox/1.1.0/ckbox.js"></script>
+  <!--Upload photo-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+    integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+  
+    i {
+      cursor: pointer;
+    }
+  
+    i:hover {
+      color: red;
+    }
+  </style>
 </head>
 <body>
   <div class="container-scroller"> 
@@ -37,7 +53,7 @@
           </button>
         </div>
         <div>
-          <a class="navbar-brand brand-logo" href="{{url('/admin')}}">
+          <a class="navbar-brand brand-logo" href="{{url('/admin/dashboard')}}">
             <img src="{{asset('auth/images/logo.svg')}}" alt="logo" />
           </a>
           {{-- <a class="navbar-brand brand-logo-mini" href="index.html">
@@ -463,8 +479,12 @@
   <script src="{{asset('auth/js/Chart.roundedBarCharts.js')}}"></script>
   <!-- End custom js for this page-->
   <script src="{{asset('auth/js/bootstrap.min.js')}}"></script>
-
   <!--Checkeditor-->
+  <script src="{!! asset('ckeditor-dev/ckeditor.js') !!}"></script>
+  <!--Upload Photo-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"
+    integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
     ClassicEditor
     .create( document.querySelector( '#editor' ), {
@@ -484,8 +504,7 @@
     console.error( error );
     } );
     </script>
-
-
+  
 </body>
 
 </html>
