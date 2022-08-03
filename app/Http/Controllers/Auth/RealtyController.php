@@ -75,6 +75,8 @@ class RealtyController extends Controller
         $this->v['listCate']=$modelCaterealty->LoadList();
         $objRealty = new Realty();
         $this->v['realty'] = $objRealty->detail($id);
+        $this->v['photo_gallery'] = $this->v['realty']->photo_gallery;
+        // dd($this->v['photo_gallery']);
         return view('auth.realty.detail',$this->v);
     }
 }

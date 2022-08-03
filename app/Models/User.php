@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -56,13 +58,45 @@ class User extends Authenticatable
         $listUsers = $query->paginate(5);
         return $listUsers;
     }
-    public function saveNew($params=[],$path){
+    public function saveNew($params=[]){
         $data = array_merge($params['cols'],[
-            'avatar' => $path,
+            'password' => Hash::make($params['cols']['password']),  //có thì thay đổi k có thì thôi
             'created_at' => Date::now(),
             'updated_at' => Date::now()
         ]);
         $res = DB::table($this->table)->insertGetId($data);
         return $res;
+    }
+    //DETAIL:
+    public function detail($id, $params = null){
+        $query = DB::table($this->table)
+                ->where('id',$id);
+
+        $obj = $query->first();
+        return $obj;
+    }
+    //UPDATE
+    public function saveUpdate($params,){
+        if(empty($params['cols']['id'])){
+            Session::flash('error', "Không xác định bản ghi cập nhật");
+            return null;
+        }
+        $dataUpdate = array_merge($params['cols'],[
+            'created_at' => Date::now(),
+            'updated_at' => Date::now()
+        ]);
+        
+        //Lọc dữ liệu
+        foreach($params['cols'] as $colName => $val){
+            if($colName == 'id') continue;
+            if(in_array($colName, $this->fillable)){
+                $dataUpdate[$colName] = (strlen($val) == 0) ? null : $val;
+            }
+        }
+        $res = DB::table($this->table)
+                ->where('id',$params['cols']['id'])
+                ->update($dataUpdate);
+        return $res;
+
     }
 }

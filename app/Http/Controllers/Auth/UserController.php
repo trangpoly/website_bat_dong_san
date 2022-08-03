@@ -43,12 +43,11 @@ class UserController extends Controller
             $request->post());
             unset($params['cols']['_token']);
             // dd($params);
+            if($request->hasFile('avatar') && $request->file('avatar')){
+                $params['cols']['avatar'] = $this->uploadFile($request->file('avatar'));
+            }
             $modelCateRealty = new User();
-            $img = $request->file('avatar');
-            $pathImg = 'images/user/'.trim($img->getClientOriginalName());
-            // dd($pathImg);
-            $modelCateRealty->image = $pathImg;
-            $res = $modelCateRealty->saveNew($params,$pathImg);
+            $res = $modelCateRealty->saveNew($params);
             if($res==null){
                 redirect()->route($method_route);
             }
@@ -62,5 +61,52 @@ class UserController extends Controller
 
         }
         return view('auth.user.add',$this->v);
+    }
+    //DETAIL:
+    public function detail($id, UserRequest $request){
+        $this->v['title'] = "Cập nhật Người dùng";
+        $objNew = new User();
+        $this->v['user'] = $objNew->detail($id);
+        return view('auth.user.detail',$this->v);
+    }
+    //UPDATE
+    public function update($id, UserRequest $request){
+        $method_route = "route_User_Detail";
+        $params=[];
+        //Lọc dữ liệu
+        $params['cols'] = array_map(function($item){
+            if($item == ""){
+                $item = null;
+            }
+            if(is_string($item)){
+                $item = trim($item);
+            }
+            return $item;
+        }, 
+        $request->post());
+        //
+        unset($params['cols']['_token']);
+        if($request->hasFile('avatar') && $request->file('avatar')){
+            $params['cols']['avatar'] = $this->uploadFile($request->file('avatar'));
+        }
+        $params['cols']['id'] = $id;
+        $modelBanner = new User();
+        $res = $modelBanner->saveUpdate($params);
+        if($res==null){
+            return redirect()->route($method_route,['id'=>$id]);
+        }
+        elseif ($res > 0){
+            Session::flash('success',"Cập nhật thành công!");
+            return redirect()->route($method_route,['id'=>$id]);
+        }
+        else {
+            Session::flash('error',"Cập nhật thất bại");
+            return redirect()->route($method_route,['id'=>$id]);
+        }
+    }
+    //UPLOAD IMG
+    public function uploadFile($file){
+        $fileName = time().'_'.$file->getClientOriginalName();
+        return $file->storeAs('img_user',$fileName,'public');
     }
 }

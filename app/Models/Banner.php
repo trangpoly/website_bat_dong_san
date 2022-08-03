@@ -22,9 +22,8 @@ class Banner extends Model
         return $listBanner;
     }
     //ADD
-    public function saveNew($params=[],$path){
+    public function saveNew($params=[]){
         $data = array_merge($params['cols'],[
-            'image' => $path,
             'created_at' => Date::now(),
             'updated_at' => Date::now()
         ]);
@@ -40,24 +39,15 @@ class Banner extends Model
         return $obj;
     }
     //UPDATE
-    public function saveUpdate($params, $path=[]){
+    public function saveUpdate($params,){
         if(empty($params['cols']['id'])){
             Session::flash('error', "Không xác định bản ghi cập nhật");
             return null;
         }
-        if($path==null){
-            $dataUpdate = array_merge($params['cols'],[
-                'created_at' => Date::now(),
-                'updated_at' => Date::now()
-            ]);
-        }
-        else {
-            $dataUpdate = array_merge($params['cols'],[
-                'image' => $path,
-                'created_at' => Date::now(),
-                'updated_at' => Date::now()
-            ]);
-        }
+        $dataUpdate = array_merge($params['cols'],[
+            'created_at' => Date::now(),
+            'updated_at' => Date::now()
+        ]);
         
         //Lọc dữ liệu
         foreach($params['cols'] as $colName => $val){

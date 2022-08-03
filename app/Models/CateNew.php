@@ -28,9 +28,8 @@ class CateNew extends Model
         return $listCate;
     }
     //ADD
-    public function saveNew($params=[],$path){
+    public function saveNew($params=[]){
         $data = array_merge($params['cols'],[
-            'image' => $path,
             'created_at' => Date::now(),
             'updated_at' => Date::now()
         ]);

@@ -18,9 +18,9 @@
                             <div class="form-group">
                                 <label>Ảnh</label>
                                 <div class="col-4 m-2 row">
-                                    <img src="{{asset($cateRealty->image)}}" alt="">
+                                    <img id="img_preview" src="{{ url('storage/'.$cateRealty->image)}}" alt="">
                                 </div>
-                                <input type="file" name="image" class="form-control file-upload-info"/>
+                                <input id="image" type="file" name="image" class="form-control file-upload-info"/>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary me-2">Cập nhật</button>

@@ -18,10 +18,10 @@
                             <div class="form-group">
                                 <label>Ảnh</label>
                                 <div class="col-4 m-2 row">
-                                    <img src="{{asset($banner->image)}}" alt="">
+                                    <img id="img_preview" src="{{ url('storage/'.$banner->image) }}" alt="">
                                 </div>
                                 <div class="input-group col-xs-12">
-                                    <input type="file" name="image" class="form-control file-upload-info"/>
+                                    <input type="file" id="image" name="image" class="form-control file-upload-info"/>
                                 </div>
                                 
                             </div>

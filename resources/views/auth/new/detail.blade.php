@@ -23,10 +23,10 @@
                             <div class="form-group row">
                                 <label>Ảnh đại diện</label>
                                 <div class="col-4 m-2 row">
-                                    <img src="{{asset($new->image)}}" alt="">
+                                    <img id="img_preview" src="{{ url('storage/'.$new->image)}}" alt="">
                                 </div>
                                 <div class="input-group col-xs-12">
-                                    <input type="file" name="image" class="form-control file-upload-info"/>
+                                    <input id="image" type="file" name="image" class="form-control file-upload-info"/>
                                 </div>
                             </div>
                         </div>

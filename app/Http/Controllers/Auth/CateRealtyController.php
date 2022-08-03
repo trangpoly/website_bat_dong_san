@@ -24,7 +24,7 @@ class CateRealtyController extends Controller
         $this->v['listCateRealty'] = $objCateRealty->LoadListWithPager($this->v['extParams']);
         return view('auth.cate-realty.list',$this->v);
     }
-
+    //ADD
     public function add(CateRealtyRequest $request){
         $this->v['title'] = "Thêm mới Danh mục Bất động sản";
 
@@ -44,12 +44,11 @@ class CateRealtyController extends Controller
             $request->post());
             unset($params['cols']['_token']);
             // dd($params);
+            if($request->hasFile('image') && $request->file('image')){
+                $params['cols']['image'] = $this->uploadFile($request->file('image'));
+            }
             $modelCateRealty = new CateRealty();
-            $img = $request->file('image');
-            $pathImg = 'images/cate-realty/'.trim($img->getClientOriginalName());
-            // dd($pathImg);
-            $modelCateRealty->image = $pathImg;
-            $res = $modelCateRealty->saveNew($params,$pathImg);
+            $res = $modelCateRealty->saveNew($params);
             if($res==null){
                 redirect()->route($method_route);
             }
@@ -89,17 +88,12 @@ class CateRealtyController extends Controller
         $request->post());
         //
         unset($params['cols']['_token']);
+        if($request->hasFile('image') && $request->file('image')){
+            $params['cols']['image'] = $this->uploadFile($request->file('image'));
+        }
         $params['cols']['id'] = $id;
         $cateRealty = new CateRealty();
-        $img = $request->file('image');
-        // dd($img);
-        if($img == null){
-            $res = $cateRealty->saveUpdate($params);
-        }
-        else {
-            $pathImg = 'images/cate-realty/'.trim($img->getClientOriginalName());
-            $res = $cateRealty->saveUpdate($params,$pathImg);
-        }
+        $res = $cateRealty->saveUpdate($params);
         if($res==null){
             return redirect()->route($method_route,['id'=>$id]);
         }
@@ -111,5 +105,10 @@ class CateRealtyController extends Controller
             Session::flash('error',"Cập nhật thất bại");
             return redirect()->route($method_route,['id'=>$id]);
         }
+    }
+    //UPLOAD IMG
+    public function uploadFile($file){
+        $fileName = time().'_'.$file->getClientOriginalName();
+        return $file->storeAs('img_cateRealty',$fileName,'public');
     }
 }

@@ -26,11 +26,11 @@
                                     <tr>
                                         <td>{{$index ++}}</td>
                                         <td>{{$item->name}}</td>
-                                        <td><img src="{{asset($item->avatar)}}" alt=""></td>
+                                        <td><img src="{{ url('storage/'.$item->avatar)}}" alt=""></td>
                                         <td>{{$item->email}}</td>
                                         <td>{{$item->role===0?"Admin":"Nhân viên"}}</td>
-                                        <td><a href="#" class="hover-icon-active-del"><i class="mdi mdi-delete"></i></a></td>
-                                        <td><a href="#" class="hover-icon-active-edit"><i class="mdi mdi-pen"></i></a></td>
+                                        <td><a href="{{route("route_User_Detail",$item->id)}}" class="hover-icon-active-del"><i class="mdi mdi-pen"></i></a></td>
+                                        <td><a href="#" class="hover-icon-active-edit"><i class="mdi mdi-delete"></i></a></td>
                                     </tr>
                                 @endforeach
                             </tbody>

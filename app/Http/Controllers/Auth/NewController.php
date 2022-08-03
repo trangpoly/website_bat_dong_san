@@ -24,8 +24,9 @@ class NewController extends Controller
 
         $objNew = new News();
         $this->v['listNew'] = $objNew->LoadListWithPager($this->v['extParams']);
-        // $this->v['cateNew'] = $objNew->getCate();
-        // dd($this->v['cateNew']);
+        // $this->v['cateNew'] = $objNew->category();
+        // dd($objNew->category());
+        // dd($this->v['listNew']);
         return view('auth.new.list',$this->v);
     }
     //ADD
@@ -47,13 +48,12 @@ class NewController extends Controller
                 return $item;
             },
             $request->post());
-            unset($params['cols']['_token']);    
+            unset($params['cols']['_token']);
+            if($request->hasFile('image') && $request->file('image')){
+                $params['cols']['image'] = $this->uploadFile($request->file('image'));
+            }  
             $modelNew = new News();
-            $img = $request->file('image');
-            $pathImg = 'images/new/'.trim($img->getClientOriginalName());
-            // dd($pathImg);
-            $modelNew->image = $pathImg;
-            $res = $modelNew->saveNew($params,$pathImg);
+            $res = $modelNew->saveNew($params);
             if($res==null){
                 redirect()->route($method_route);
             }
@@ -95,17 +95,14 @@ class NewController extends Controller
         $request->post());
         //
         unset($params['cols']['_token']);
+        if($request->hasFile('image') && $request->file('image')){
+            $params['cols']['image'] = $this->uploadFile($request->file('image'));
+        }  
         $params['cols']['id'] = $id;
         $cateRealty = new News();
-        $img = $request->file('image');
         // dd($img);
-        if($img == null){
-            $res = $cateRealty->saveUpdate($params);
-        }
-        else {
-            $pathImg = 'images/new/'.trim($img->getClientOriginalName());
-            $res = $cateRealty->saveUpdate($params,$pathImg);
-        }
+        $res = $cateRealty->saveUpdate($params);
+        
         if($res==null){
             return redirect()->route($method_route,['id'=>$id]);
         }
@@ -117,5 +114,10 @@ class NewController extends Controller
             Session::flash('error',"Cập nhật thất bại");
             return redirect()->route($method_route,['id'=>$id]);
         }
+    }
+    //UPLOAD IMG
+    public function uploadFile($file){
+        $fileName = time().'_'.$file->getClientOriginalName();
+        return $file->storeAs('img_new',$fileName,'public');
     }
 }

@@ -44,12 +44,11 @@ class BannerController extends Controller
             $request->post());
             unset($params['cols']['_token']);
             // dd($params);
-            $modelCateRealty = new Banner();
-            $img = $request->file('image');
-            $pathImg = 'images/banner/'.trim($img->getClientOriginalName());
-            // dd($pathImg);
-            $modelCateRealty->image = $pathImg;
-            $res = $modelCateRealty->saveNew($params,$pathImg);
+            if($request->hasFile('image') && $request->file('image')){
+                $params['cols']['image'] = $this->uploadFile($request->file('image'));
+            }
+            $modelBanner = new Banner();
+            $res = $modelBanner->saveNew($params);
             if($res==null){
                 redirect()->route($method_route);
             }
@@ -90,17 +89,12 @@ class BannerController extends Controller
         $request->post());
         //
         unset($params['cols']['_token']);
+        if($request->hasFile('image') && $request->file('image')){
+            $params['cols']['image'] = $this->uploadFile($request->file('image'));
+        }
         $params['cols']['id'] = $id;
-        $cateRealty = new Banner();
-        $img = $request->file('image');
-        // dd($img);
-        if($img == null){
-            $res = $cateRealty->saveUpdate($params);
-        }
-        else {
-            $pathImg = 'images/banner/'.trim($img->getClientOriginalName());
-            $res = $cateRealty->saveUpdate($params,$pathImg);
-        }
+        $modelBanner = new Banner();
+        $res = $modelBanner->saveUpdate($params);
         if($res==null){
             return redirect()->route($method_route,['id'=>$id]);
         }
@@ -113,4 +107,11 @@ class BannerController extends Controller
             return redirect()->route($method_route,['id'=>$id]);
         }
     }
+
+    //UPLOAD IMG
+    public function uploadFile($file){
+        $fileName = time().'_'.$file->getClientOriginalName();
+        return $file->storeAs('img_banner',$fileName,'public');
+    }
+   
 }

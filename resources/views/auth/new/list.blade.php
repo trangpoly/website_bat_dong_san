@@ -1,6 +1,3 @@
-<?php 
-use App\Models\News;
-?>
 @extends('auth.layout')
 @section('title',$title)
 @section('content')
@@ -28,8 +25,8 @@ use App\Models\News;
                                 <tr>
                                     <td>{{$index ++}}</td>
                                     <td>{{$item->title}}</td>
-                                    <td><img src="{{asset($item->image)}}" alt=""></td>
-                                    <td>{{News::find($item->category_new_id)->getCate->title}}</td>
+                                    <td><img src="{{ url('storage/'.$item->image)}}" alt=""></td>
+                                    <td>{{$item->category->title}}</td>
                                     <td><a href="{{route("route_New_Detail",$item->id)}}" class="hover-icon-active-del"><i class="mdi mdi-pen"></i></a></td>
                                     <td><a href="#" class="hover-icon-active-edit"><i class="mdi mdi-delete"></i></a></td>
                                 </tr>

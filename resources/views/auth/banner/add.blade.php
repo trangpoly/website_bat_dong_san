@@ -17,10 +17,12 @@
                             </div>
                             <div class="form-group">
                                 <label>Ảnh</label>
-                                <div class="input-group col-xs-12">
-                                    <input type="file" name="image" class="form-control file-upload-info"/>
+                                <div class="col-4 m-2 row">
+                                    <img id="img_preview" src="" alt="">
                                 </div>
-                                
+                                <div class="input-group col-xs-12">
+                                    <input type="file" name="image" id="image" class="form-control file-upload-info"/>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>Mô tả</label>

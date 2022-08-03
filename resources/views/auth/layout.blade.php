@@ -474,6 +474,8 @@
   <script src="{{asset('auth/js/settings.js')}}"></script>
   <script src="{{asset('auth/js/todolist.js')}}"></script>
   <!-- endinject -->
+  <!--Upload Image-->
+  <script src="{{asset('auth/js/upload-image.js')}}"></script>
   <!-- Custom js for this page-->
   <script src="{{asset('auth/js/dashboard.js')}}"></script>
   <script src="{{asset('auth/js/Chart.roundedBarCharts.js')}}"></script>

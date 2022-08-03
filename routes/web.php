@@ -53,7 +53,9 @@ Route::middleware(['auth'])->prefix('/admin')->group(function(){
         Route::post('banner/update/{id}',[BannerController::class,'update'])->name('route_Banner_Update');
         
     Route::get('user',[UserController::class,'list'])->name('route_User_list');
-    Route::match(['get', 'post'], 'user/add', [UserController::class,'add'])->name('route_User_Add');
+        Route::match(['get', 'post'], 'user/add', [UserController::class,'add'])->name('route_User_Add');
+        Route::match(['get','post'], 'user/detail/{id}', [UserController::class,'detail'])->name('route_User_Detail');
+        Route::post('user/update/{id}',[UserController::class,'update'])->name('route_User_Update');
 });
 
 Route::get('/','App\Http\Controllers\Client\HomeController@index');

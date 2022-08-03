@@ -35,7 +35,6 @@ class Realty extends Model
     public function detail($id, $params = null){
         $query = DB::table($this->table)
                 ->where('id',$id);
-
         $obj = $query->first();
         return $obj;
     }

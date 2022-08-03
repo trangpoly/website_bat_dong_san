@@ -44,16 +44,22 @@
                                 <div class="col-sm-10"></div>
                                 <div class="col-sm-5 col-form-label">
                                     <div class="col-md-12">
-                                        <div class="row" id="previewMainImg"></div>
+                                        <div class="row" id="previewMainImg">
+                                                {{-- @foreach (json_decode($photo_gallery) as $item)
+                                                    <div class="col-4 mt-1" style="position: relative;">
+                                                        <i data-id="{{$item->id}}" class="mdi mdi-close-circle delete" style="position: absolute;top: 0;right: 0;transform: translateX(-75%);"></i>
+                                                        <img src="{{$item->src}}" class="img-thumbnail" />
+                                                    </div>
+                                                @endforeach --}}
+                                        </div>
                                     </div>
                                     <div class="upload-btn-wrapper row">
-                                        <input type="text" name="photo_gallery" id="photo_gallery" value="{{$realty->photo_gallery}}" hidden>
+                                        <input type="text" name="photo_gallery" id="photo_gallery" value="" hidden>
                                         <div class="col-3 text-primary btn-fw" id="btnAddMainImg">Thêm ảnh</div>
                                         <p id="count"></p>
                                         <input type="file" name="img" id="img" class="file" multiple />
                                     </div>
                                 </div>
-                                
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -180,5 +186,3 @@
 
 <script src="{{asset('auth/js/upload-photo.js')}}"></script>
 @endsection
-            
-            
