@@ -8,7 +8,27 @@
                 <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">{{$title}}</h4>
-                    <form class="form-sample" action="" method="POST"  enctype="multipart/form-data">
+                    <?php //Hiển thị thông báo thành công?>
+                    @if ( Session::has('success') )
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <p>{{ Session::get('success') }}</p>
+                        </div>
+                    @endif
+                    <?php //Hiển thị thông báo lỗi?>
+                    @if ( Session::has('error') )
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            <p>{{ Session::get('error') }}<p>
+                        </div>
+                    @endif
+                    <!-- -->
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            @foreach ($errors->all() as $error)
+                                <p>{{ $error }}</p>
+                            @endforeach
+                        </div>
+                    @endif
+                    <form class="form-sample" action="{{route('route_Realty_Update',['id'=>request()->route('id')])}}" method="POST"  enctype="multipart/form-data">
                         @csrf
                     <div class="row">
                         <div class="col-md-12">
@@ -44,20 +64,20 @@
                                 <div class="col-sm-10"></div>
                                 <div class="col-sm-5 col-form-label">
                                     <div class="col-md-12">
-                                        <div class="row" id="previewMainImg">
-                                                {{-- @foreach (json_decode($photo_gallery) as $item)
+                                        <div class="row" id="photo_preview">
+                                            @foreach (json_decode($photo_gallery) as $item)
                                                     <div class="col-4 mt-1" style="position: relative;">
                                                         <i data-id="{{$item->id}}" class="mdi mdi-close-circle delete" style="position: absolute;top: 0;right: 0;transform: translateX(-75%);"></i>
                                                         <img src="{{$item->src}}" class="img-thumbnail" />
                                                     </div>
-                                                @endforeach --}}
+                                            @endforeach
                                         </div>
                                     </div>
                                     <div class="upload-btn-wrapper row">
-                                        <input type="text" name="photo_gallery" id="photo_gallery" value="" hidden>
-                                        <div class="col-3 text-primary btn-fw" id="btnAddMainImg">Thêm ảnh</div>
+                                        <input type="text" name="photo_gallery" id="photo_gallery" hidden>
+                                        <div class="col-3 text-primary btn-fw" id="btnAddMainPhoto">Thêm ảnh</div>
                                         <p id="count"></p>
-                                        <input type="file" name="img" id="img" class="file" multiple />
+                                        <input type="file" name="photo" id="photo" class="file" multiple />
                                     </div>
                                 </div>
                             </div>
@@ -67,6 +87,7 @@
                                 <label class="col-sm-2 col-form-label">Danh mục Bất động sản</label>
                                 <div class="col-sm-5">
                                 <select class="form-control" style="line-height: 2" name="category_realty_id">
+                                    <option value="{{$realty->category_realty_id}}" selected>{{$realty->category->title}}</option>
                                     @foreach ($listCate as $item)
                                         <option value="{{$item->id}}">{{$item->title}}</option>
                                     @endforeach
@@ -145,38 +166,6 @@
                     <button type="submit" class="btn btn-primary me-2">Cập nhật</button>
                     <button class="btn btn-light">Hủy</button>
                     </form>
-                    <?php //Hiển thị thông báo thành công?>
-                    @if ( Session::has('success') )
-                        <div class="alert alert-success alert-dismissible" role="alert">
-                            <strong>{{ Session::get('success') }}</strong>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                <span class="sr-only">Close</span>
-                            </button>
-                        </div>
-                    @endif
-                    <?php //Hiển thị thông báo lỗi?>
-                    @if ( Session::has('error') )
-                        <div class="alert alert-danger alert-dismissible" role="alert">
-                            <strong>{{ Session::get('error') }}</strong>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                <span class="sr-only">Close</span>
-                            </button>
-                        </div>
-                    @endif
-                    <!-- -->
-                    @if ($errors->any())
-                        <div class="alert alert-danger alert-dismissible" role="alert">
-                                @foreach ($errors->all() as $error)
-                                    <p>{{ $error }}</p>
-                                @endforeach
-                            <button type="button" class="close btn-outline-danger btn-fw" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                <span class="sr-only">Close</span>
-                            </button>
-                        </div>
-                    @endif
                 </div>
                 </div>
             </div> 

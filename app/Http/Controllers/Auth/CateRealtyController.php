@@ -111,4 +111,23 @@ class CateRealtyController extends Controller
         $fileName = time().'_'.$file->getClientOriginalName();
         return $file->storeAs('img_cateRealty',$fileName,'public');
     }
+    //DELETE
+    public function remove($id){
+        $method_route = "route_CateRealty_list";
+        // dd($id);
+        $modelCateRealty = new CateRealty();
+        $data = $modelCateRealty->detail($id);
+        $res = $modelCateRealty->remove($id,$data);
+        if($res==null){
+            return redirect()->route($method_route);
+        }
+        elseif ($res > 0){
+            Session::flash('success',"Xóa bản ghi thành công!");
+            return redirect()->route($method_route);
+        }
+        else {
+            Session::flash('error',"Xóa bản ghi thất bại");
+            return redirect()->route($method_route);
+        }
+    }
 }

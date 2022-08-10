@@ -17,7 +17,8 @@ class CateRealty extends Model
 
     public function LoadListWithPager($params=[]){
         $query = DB::table($this->table)
-                ->select($this->fillable);
+                ->select($this->fillable)
+                ->where('status',0);;
         $listCateRealty = $query->paginate(5);
         return $listCateRealty;
     }
@@ -69,5 +70,25 @@ class CateRealty extends Model
                 ->update($dataUpdate);
         return $res;
 
+    }
+    //DELETE
+    public function remove($id){
+        if(empty($id)){
+            Session::flash('error', "Không xác định bản ghi cập nhật");
+            return null;
+        }
+        $dataRemove = array_merge([
+            'status' => 1,
+            'created_at' => Date::now(),
+            'updated_at' => Date::now()
+        ]);
+        $res = DB::table($this->table)
+                ->where('id',$id)
+                ->update($dataRemove);
+        DB::table('realty')
+                ->where('category_realty_id', $id)
+                ->update(['status' => 1]);
+        Session::flash('success','Xóa bản ghi thành công!');
+        return $res;
     }
 }

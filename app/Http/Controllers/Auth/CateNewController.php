@@ -111,4 +111,24 @@ class CateNewController extends Controller
         $fileName = time().'_'.$file->getClientOriginalName();
         return $file->storeAs('img_cateNew',$fileName,'public');
     }
+
+    //DELETE
+    public function remove($id){
+        $method_route = "route_CateNew_list";
+        // dd($id);
+        $modelCateNew = new CateNew();
+        $data = $modelCateNew->detail($id);
+        $res = $modelCateNew->remove($id,$data);
+        if($res==null){
+            return redirect()->route($method_route);
+        }
+        elseif ($res > 0){
+            Session::flash('success',"Xóa bản ghi thành công!");
+            return redirect()->route($method_route);
+        }
+        else {
+            Session::flash('error',"Xóa bản ghi thất bại");
+            return redirect()->route($method_route);
+        }
+    }
 }

@@ -1,72 +1,73 @@
-const CLOUDINARY_API = "https://api.cloudinary.com/v1_1/trangptph18099/image/upload";
-const CLOUDINARY_PRESET = "ufnnkotm";
-const file = document.getElementById('img');
-const preview = document.getElementById('previewMainImg');
-const photo_gallerys = document.getElementById('photo_gallery');
-let id = 1;
-let photo_gallery = [];
-let arr = [];
-
-function add(data) {
-    arr.push(data);
-    photo_gallerys.value = JSON.stringify(arr);
-  }
-  const count = document.getElementById('count');
-  function render(data, option = 1) {
+const CLOUDINARY_API = "https://api.cloudinary.com/v1_1/dzsxaq1gf/image/upload";
+const CLOUDINARY_PRESET = "fvq2d10h";
+    const file = document.getElementById('photo');
+    const preview = document.getElementById('photo_preview');
+    const photo_gallerys = document.getElementById('photo_gallery');
     let html = '';
-    let index = 0;
-    data.forEach(item => {
-      async function upload(file) {
+    let arr = [];
+    async function upload(file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", CLOUDINARY_PRESET);
+      const { data } = await axios.post(CLOUDINARY_API, formData, {
+        headers: {
+          "Content-Type": "application/form-data",
+        },
+      });
 
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("upload_preset", CLOUDINARY_PRESET);
-        const { data } = await axios.post(CLOUDINARY_API, formData, {
-          headers: {
-            "Content-Type": "application/form-data",
-          },
-        });
-
-        return data;
+      return data;
+    }
+    file.addEventListener('change', function (e) {
+      const files = e.target.files;
+      let obj = [];
+      for (let index = 0; index < files.length; index++) {
+        let id = Math.floor(Math.random() * 10000000);
+        document.getElementById('loading').style.display = 'block';
+        document.getElementById('btnAddPhoto').style.display = 'none';
+        upload(files[index]).then(data => {
+document.getElementById('loading').style.display = 'none';
+          document.getElementById('btnAddPhoto').style.display = 'block';
+          html += `
+          <div class="col-4 mt-1" style="position: relative;">
+          <i data-id="${id}" class="fa-solid fa-circle-xmark delete" style="position: absolute;top: 0;right: 0;transform: translateX(-75%);"></i>
+          <img src="${data.url}" class="img-thumbnail" />
+          </div>
+          `;
+          arr.push({
+            id: id,
+            src: data.url
+          });
+          render(arr);
+          preview.innerHTML = html
+          remove(); // Gán hàm cho các nút xóa
+        }).catch(error => console.log(error));
       }
-      if (option == 1) {
-        upload(item.data).then(data => add({id:item.id,src:data.url})).catch(error => console.log(error));
-     }
-     const src = URL.createObjectURL(item.data);
-     html += `
-        <div class="col-4 mt-1" style="position: relative;">
-        <i data-id="${item.id}" class="mdi mdi-close-circle delete" style="position: absolute;top: 0;right: 0;transform: translateX(-75%);"></i>
-        <img src="${src}" class="img-thumbnail" />
-        </div>`
-     index++;
-   });
 
-   preview.innerHTML = html;
-   document.querySelectorAll('.delete').forEach(item => {
-     item.addEventListener('click', () => {
-       const { id } = item.dataset;
-       arr = arr.filter(item => item.id != id);
-       photo_gallery = photo_gallery.filter(item => item.id != id);
-       render(photo_gallery, 2);
-       photo_gallerys.value = JSON.stringify(arr);
+    });
 
-     })
-   });
-   count.innerHTML = `${index} ảnh đã được chọn`;
- }
- file.addEventListener('change', function (e) {
-   const files = e.target.files;
-   let html = '';
-   let data = [];
-   let i = 1;
-   for (const iterator of files) {
-     const date = new Date()
-     data.push({
-       id: Math.floor(Math.random() * 10000000000 + 1 + i),
-       data: iterator
-     });
-     i += 1;
-   }
-   photo_gallery.push(...data);
-   render(photo_gallery);
- });
+    function render(data) {
+      photo_gallerys.value = JSON.stringify(data);
+    }
+
+    function remove() {
+      document.querySelectorAll('.delete').forEach(item => {
+        item.addEventListener('click', function () {
+          const { id } = item.dataset;
+          html = '';
+          arr = arr.filter(item => item.id != id);
+
+          arr.forEach(item => {
+            html += `
+                    <div class="col-4 mt-1" style="position: relative;">
+          <i data-id="${item.id}" class="fa-solid fa-circle-xmark delete" style="position: absolute;top: 0;right: 0;transform: translateX(-75%);"></i>
+          <img src="${item.src}" class="img-thumbnail" />
+          </div>
+                    `;
+          });
+          preview.innerHTML = html;
+          render(arr);
+          remove() // Gọi lại chính nó để gán hàm xóa các tử được render vào biến html
+        })
+      })
+    }
+

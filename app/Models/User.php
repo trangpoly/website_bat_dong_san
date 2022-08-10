@@ -54,10 +54,12 @@ class User extends Authenticatable
 
     public function LoadListWithPager($params=[]){
         $query = DB::table($this->table)
-                ->select($this->fillable);
+                ->select($this->fillable)
+                ->where('status',0);
         $listUsers = $query->paginate(5);
         return $listUsers;
     }
+    //ADD
     public function saveNew($params=[]){
         $data = array_merge($params['cols'],[
             'password' => Hash::make($params['cols']['password']),  //có thì thay đổi k có thì thôi
@@ -98,5 +100,22 @@ class User extends Authenticatable
                 ->update($dataUpdate);
         return $res;
 
+    }
+    //DELETE
+    public function remove($id){
+        if(empty($id)){
+            Session::flash('error', "Không xác định bản ghi cập nhật");
+            return null;
+        }
+        $dataRemove = array_merge([
+            'status' => 1,
+            'created_at' => Date::now(),
+            'updated_at' => Date::now()
+        ]);
+        $res = DB::table($this->table)
+                ->where('id',$id)
+                ->update($dataRemove);
+        Session::flash('success','Xóa bản ghi thành công!');
+        return $res;
     }
 }

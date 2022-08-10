@@ -70,7 +70,7 @@ class NewController extends Controller
 
     //DETAIL:
     public function detail($id, NewRequest $request){
-        $this->v['title'] = "Cập nhật Tin tức";
+        $this->v['title'] = "Chi tiết Tin tức";
         $modelCateNew = new CateNew();
         $this->v['listCate']=$modelCateNew->LoadList();
         $objNew = new News();
@@ -93,7 +93,7 @@ class NewController extends Controller
             return $item;
         }, 
         $request->post());
-        //
+        // dd($params['cols']['content']);
         unset($params['cols']['_token']);
         if($request->hasFile('image') && $request->file('image')){
             $params['cols']['image'] = $this->uploadFile($request->file('image'));
@@ -119,5 +119,24 @@ class NewController extends Controller
     public function uploadFile($file){
         $fileName = time().'_'.$file->getClientOriginalName();
         return $file->storeAs('img_new',$fileName,'public');
+    }
+    //DELETE
+    public function remove($id){
+        $method_route = "route_New_list";
+        // dd($id);
+        $modelNew = new News();
+        $data = $modelNew->detail($id);
+        $res = $modelNew->remove($id,$data);
+        if($res==null){
+            return redirect()->route($method_route);
+        }
+        elseif ($res > 0){
+            Session::flash('success',"Xóa bản ghi thành công!");
+            return redirect()->route($method_route);
+        }
+        else {
+            Session::flash('error',"Xóa bản ghi thất bại");
+            return redirect()->route($method_route);
+        }
     }
 }

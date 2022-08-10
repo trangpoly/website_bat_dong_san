@@ -81,7 +81,7 @@ class RealtyRequest extends FormRequest
             'area.required' => "Diện tích là bắt buộc",
             "phone.required" => "Số điện thoại là bắt buộc",
             "address.required" => "Địa chỉ là bắt buộc",
-            "required" => "Email là bắt buộc",
+            "email.required" => "Email là bắt buộc",
             "email.email" => "Email sai định dạng",
             "short_desc.required" => "Mô tả ngắn là bắt buộc",
             "desc.required" => "Mô tả là bắt buộc",

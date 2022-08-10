@@ -17,13 +17,15 @@ class CateNew extends Model
 
     public function LoadListWithPager($params=[]){
         $query = DB::table($this->table)
-                ->select($this->fillable);
+                ->select($this->fillable)
+                ->where('status',0);
         $listCateNew = $query->paginate(5);
         return $listCateNew;
     }
     public function LoadList($params=[]){
         $listCate = DB::table($this->table)
                 ->select($this->fillable)
+                ->where('status',0)
                 ->get();
         return $listCate;
     }
@@ -75,6 +77,25 @@ class CateNew extends Model
                 ->where('id',$params['cols']['id'])
                 ->update($dataUpdate);
         return $res;
-
+    }
+    //DELETE
+    public function remove($id){
+        if(empty($id)){
+            Session::flash('error', "Không xác định bản ghi cập nhật");
+            return null;
+        }
+        $dataRemove = array_merge([
+            'status' => 1,
+            'created_at' => Date::now(),
+            'updated_at' => Date::now()
+        ]);
+        $res = DB::table($this->table)
+                ->where('id',$id)
+                ->update($dataRemove);
+        DB::table('news')
+                ->where('category_new_id', $id)
+                ->update(['status' => 1]);
+        Session::flash('success','Xóa bản ghi thành công!');
+        return $res;
     }
 }

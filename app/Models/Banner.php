@@ -17,13 +17,15 @@ class Banner extends Model
 
     public function LoadListWithPager($params=[]){
         $query = DB::table($this->table)
-                ->select($this->fillable);
+                ->select($this->fillable)
+                ->where('status',0);
         $listBanner = $query->paginate(5);
         return $listBanner;
     }
     //ADD
     public function saveNew($params=[]){
         $data = array_merge($params['cols'],[
+            'status' => 0,
             'created_at' => Date::now(),
             'updated_at' => Date::now()
         ]);
@@ -39,7 +41,7 @@ class Banner extends Model
         return $obj;
     }
     //UPDATE
-    public function saveUpdate($params,){
+    public function saveUpdate($params){
         if(empty($params['cols']['id'])){
             Session::flash('error', "Không xác định bản ghi cập nhật");
             return null;
@@ -61,5 +63,22 @@ class Banner extends Model
                 ->update($dataUpdate);
         return $res;
 
+    }
+    //DELETE
+    public function remove($id){
+        if(empty($id)){
+            Session::flash('error', "Không xác định bản ghi cập nhật");
+            return null;
+        }
+        $dataRemove = array_merge([
+            'status' => 1,
+            'created_at' => Date::now(),
+            'updated_at' => Date::now()
+        ]);
+        $res = DB::table($this->table)
+                ->where('id',$id)
+                ->update($dataRemove);
+        Session::flash('success','Xóa bản ghi thành công!');
+        return $res;
     }
 }

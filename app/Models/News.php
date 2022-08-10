@@ -17,7 +17,8 @@ class News extends Model
 
     public function LoadListWithPager($params=[]){
         $query = News::with('category')
-                ->select($this->fillable);
+                ->select($this->fillable)
+                ->where('status',0);
         $listNew = $query->paginate(5);
         return $listNew;
     }
@@ -37,7 +38,7 @@ class News extends Model
     }
     //DETAIL:
     public function detail($id, $params = null){
-        $query = DB::table($this->table)
+        $query = News::with('category')
                 ->where('id',$id);
 
         $obj = $query->first();
@@ -65,6 +66,22 @@ class News extends Model
                 ->where('id',$params['cols']['id'])
                 ->update($dataUpdate);
         return $res;
-
+    }
+    //DELETE
+    public function remove($id){
+        if(empty($id)){
+            Session::flash('error', "Không xác định bản ghi cập nhật");
+            return null;
+        }
+        $dataRemove = array_merge([
+            'status' => 1,
+            'created_at' => Date::now(),
+            'updated_at' => Date::now()
+        ]);
+        $res = DB::table($this->table)
+                ->where('id',$id)
+                ->update($dataRemove);
+        Session::flash('success','Xóa bản ghi thành công!');
+        return $res;
     }
 }

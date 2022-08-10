@@ -8,6 +8,26 @@
                 <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">{{$title}}</h4>
+                    <?php //Hiển thị thông báo thành công?>
+                    @if ( Session::has('success') )
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <p>{{ Session::get('success') }}</p>
+                        </div>
+                    @endif
+                    <?php //Hiển thị thông báo lỗi?>
+                    @if ( Session::has('error') )
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            <p>{{ Session::get('error') }}</p>
+                        </div>
+                    @endif
+                    <!-- -->
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            @foreach ($errors->all() as $error)
+                                <p>{{ $error }}</p>
+                            @endforeach
+                        </div>
+                    @endif
                     <form class="form-sample"  class="form-sample" action="{{route('route_New_Update',['id'=>request()->route('id')])}}" method="POST"  enctype="multipart/form-data">
                         @csrf
                     <div class="row" id="form">
@@ -35,6 +55,7 @@
                                 <label>Danh mục Tin tức</label>
                                 <div class="col-sm-5">
                                 <select class="form-control" style="line-height: 2" name="category_new_id">
+                                        <option value="{{$new->category_new_id}}" selected>{{$new->category->title}}</option>
                                     @foreach ($listCate as $item)
                                         <option value="{{$item->id}}">{{$item->title}}</option>
                                     @endforeach
@@ -52,49 +73,19 @@
                         </div>
                         
                     </div>
-                    <button type="submit" class="btn btn-primary me-2">Cập nhật</button>
+                    <button type="submit" id="btn-update" class="btn btn-primary me-2">Cập nhật</button>
                     <button class="btn btn-light">Hủy</button>
                     </form>
-                    <?php //Hiển thị thông báo thành công?>
-                    @if ( Session::has('success') )
-                        <div class="alert alert-success alert-dismissible" role="alert">
-                            <strong>{{ Session::get('success') }}</strong>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                <span class="sr-only">Close</span>
-                            </button>
-                        </div>
-                    @endif
-                    <?php //Hiển thị thông báo lỗi?>
-                    @if ( Session::has('error') )
-                        <div class="alert alert-danger alert-dismissible" role="alert">
-                            <strong>{{ Session::get('error') }}</strong>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                <span class="sr-only">Close</span>
-                            </button>
-                        </div>
-                    @endif
-                    <!-- -->
-                    @if ($errors->any())
-                        <div class="alert alert-danger alert-dismissible" role="alert">
-                                @foreach ($errors->all() as $error)
-                                    <p>{{ $error }}</p>
-                                @endforeach
-                            <button type="button" class="close btn-outline-danger btn-fw" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                <span class="sr-only">Close</span>
-                            </button>
-                        </div>
-                    @endif
                 </div>
                 </div>
             </div> 
         </div> 
     </div> 
 </div> 
-
-<script src="{{asset('auth/js/add_form.js')}}"></script>
+<script>
+    let x = document.getElementById('btn-update');
+    setTimeout(function(){x }, 5000);
+</script>
 @endsection
             
             

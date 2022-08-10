@@ -64,9 +64,9 @@ class UserController extends Controller
     }
     //DETAIL:
     public function detail($id, UserRequest $request){
-        $this->v['title'] = "Cập nhật Người dùng";
-        $objNew = new User();
-        $this->v['user'] = $objNew->detail($id);
+        $this->v['title'] = "Thông tin Người dùng";
+        $objUser = new User();
+        $this->v['user'] = $objUser->detail($id);
         return view('auth.user.detail',$this->v);
     }
     //UPDATE
@@ -104,9 +104,29 @@ class UserController extends Controller
             return redirect()->route($method_route,['id'=>$id]);
         }
     }
+
     //UPLOAD IMG
     public function uploadFile($file){
         $fileName = time().'_'.$file->getClientOriginalName();
         return $file->storeAs('img_user',$fileName,'public');
+    }
+    //DELETE
+    public function remove($id){
+        $method_route = "route_User_list";
+        // dd($id);
+        $modelUser = new User();
+        $data = $modelUser->detail($id);
+        $res = $modelUser->remove($id,$data);
+        if($res==null){
+            return redirect()->route($method_route);
+        }
+        elseif ($res > 0){
+            Session::flash('success',"Xóa bản ghi thành công!");
+            return redirect()->route($method_route);
+        }
+        else {
+            Session::flash('error',"Xóa bản ghi thất bại");
+            return redirect()->route($method_route);
+        }
     }
 }

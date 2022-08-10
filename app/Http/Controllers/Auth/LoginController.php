@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\Login;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
@@ -36,7 +38,8 @@ class LoginController extends Controller
             $password = $request->input('password');
             //Ktra đăng nhập
             if(Auth::attempt(['email'=>$email,'password'=>$password])){
-                return redirect('admin/dashboard');
+                Mail::to($email)->send(new Login(['content'=>'Đăng nhập thành công']));
+                return redirect('admin');
             }
             else{
                 Session::flash('error','Email hoặc Password không đúng');

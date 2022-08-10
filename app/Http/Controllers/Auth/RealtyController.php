@@ -46,14 +46,14 @@ class RealtyController extends Controller
                 return $item;
             },
             $request->post());
-            unset($params['cols']['_token']);   
+            unset($params['cols']['_token']);  
+            // dd($params['cols']['photo_gallery']);
+            if($request->hasFile('image') && $request->file('image')){
+                $params['cols']['image'] = $this->uploadFile($request->file('image'));
+            } 
             // dd($params['cols']); 
             $modelNew = new Realty();
-            $img = $request->file('image');
-            $pathImg = 'images/realty/'.trim($img->getClientOriginalName());
-            // dd($pathImg);
-            $modelNew->image = $pathImg;
-            $res = $modelNew->saveNew($params,$pathImg);
+            $res = $modelNew->saveNew($params);
             if($res==null){
                 redirect()->route($method_route);
             }
@@ -70,7 +70,7 @@ class RealtyController extends Controller
 
     //DETAIL:
     public function detail($id, RealtyRequest $request){
-        $this->v['title'] = "Cập nhật Tin tức";
+        $this->v['title'] = "Chi tiết Bất động sản";
         $modelCaterealty = new CateRealty();
         $this->v['listCate']=$modelCaterealty->LoadList();
         $objRealty = new Realty();
@@ -78,5 +78,66 @@ class RealtyController extends Controller
         $this->v['photo_gallery'] = $this->v['realty']->photo_gallery;
         // dd($this->v['photo_gallery']);
         return view('auth.realty.detail',$this->v);
+    }
+    //UPDATE
+    public function update($id, RealtyRequest $request){
+        $method_route = "route_Realty_Detail";
+        $params=[];
+        //Lọc dữ liệu
+        $params['cols'] = array_map(function($item){
+            if($item == ""){
+                $item = null;
+            }
+            if(is_string($item)){
+                $item = trim($item);
+            }
+            return $item;
+        }, 
+        $request->post());
+        // dd($params['cols']['content']);
+        unset($params['cols']['_token']);
+        if($request->hasFile('image') && $request->file('image')){
+            $params['cols']['image'] = $this->uploadFile($request->file('image'));
+        }  
+        $params['cols']['id'] = $id;
+        $modelRealty = new Realty();
+        // dd($img);
+        $res = $modelRealty->saveUpdate($params);
+        
+        if($res==null){
+            return redirect()->route($method_route,['id'=>$id]);
+        }
+        elseif ($res > 0){
+            Session::flash('success',"Cập nhật thành công!");
+            return redirect()->route($method_route,['id'=>$id]);
+        }
+        else {
+            Session::flash('error',"Cập nhật thất bại");
+            return redirect()->route($method_route,['id'=>$id]);
+        }
+    }
+    //UPLOAD IMG
+    public function uploadFile($file){
+        $fileName = time().'_'.$file->getClientOriginalName();
+        return $file->storeAs('img_realty',$fileName,'public');
+    }
+    //DELETE
+    public function remove($id){
+        $method_route = "route_Realty_list";
+        // dd($id);
+        $modelRealty = new Realty();
+        $data = $modelRealty->detail($id);
+        $res = $modelRealty->remove($id,$data);
+        if($res==null){
+            return redirect()->route($method_route);
+        }
+        elseif ($res > 0){
+            Session::flash('success',"Xóa bản ghi thành công!");
+            return redirect()->route($method_route);
+        }
+        else {
+            Session::flash('error',"Xóa bản ghi thất bại");
+            return redirect()->route($method_route);
+        }
     }
 }

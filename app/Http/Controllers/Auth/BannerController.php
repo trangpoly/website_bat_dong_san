@@ -63,7 +63,7 @@ class BannerController extends Controller
         }
         return view('auth.banner.add',$this->v);
     }
-    //EDIT:
+    //DETAIL:
     public function detail($id, BannerRequest $request){
         $this->v['title'] = "Cập nhật Banner";
         $objBanner = new Banner();
@@ -76,6 +76,7 @@ class BannerController extends Controller
     public function update($id, BannerRequest $request){
         $method_route = "route_Banner_Detail";
         $params=[];
+        dd(1);
         //Lọc dữ liệu
         $params['cols'] = array_map(function($item){
             if($item == ""){
@@ -87,6 +88,7 @@ class BannerController extends Controller
             return $item;
         }, 
         $request->post());
+        dd($params['cols']['content']);
         //
         unset($params['cols']['_token']);
         if($request->hasFile('image') && $request->file('image')){
@@ -112,6 +114,26 @@ class BannerController extends Controller
     public function uploadFile($file){
         $fileName = time().'_'.$file->getClientOriginalName();
         return $file->storeAs('img_banner',$fileName,'public');
+    }
+
+    //DELETE
+    public function remove($id){
+        $method_route = "route_Banner_list";
+        // dd($id);
+        $modelBanner = new Banner();
+        $data = $modelBanner->detail($id);
+        $res = $modelBanner->remove($id,$data);
+        if($res==null){
+            return redirect()->route($method_route);
+        }
+        elseif ($res > 0){
+            Session::flash('success',"Xóa bản ghi thành công!");
+            return redirect()->route($method_route);
+        }
+        else {
+            Session::flash('error',"Xóa bản ghi thất bại");
+            return redirect()->route($method_route);
+        }
     }
    
 }

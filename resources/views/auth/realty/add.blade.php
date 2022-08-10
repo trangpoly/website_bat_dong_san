@@ -8,6 +8,26 @@
                 <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">{{$title}}</h4>
+                    <?php //Hiển thị thông báo thành công?>
+                    @if ( Session::has('success') )
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <p>{{ Session::get('success') }}</p>
+                        </div>
+                    @endif
+                    <?php //Hiển thị thông báo lỗi?>
+                    @if ( Session::has('error') )
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            <p>{{ Session::get('error') }}<p>
+                        </div>
+                    @endif
+                    <!-- -->
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            @foreach ($errors->all() as $error)
+                                <p>{{ $error }}</p>
+                            @endforeach
+                        </div>
+                    @endif
                     <form class="form-sample" action="" method="POST"  enctype="multipart/form-data">
                         @csrf
                     <div class="row">
@@ -27,15 +47,34 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="form-group row">
-                                <label class="col-sm-1 col-form-label">Ảnh đại diện</label>
-                                <div class="col-sm-5">
-                                    <input type="file" name="image" class="form-control file-upload-info"/>
-                                </div>
+                        <div class="form-group">
+                            <label>Ảnh đại diện</label>
+                            <div class="col-4 m-2 row">
+                                <img id="img_preview" src="" alt="">
+                            </div>
+                            <div class="input-group col-xs-12">
+                                <input type="file" name="image" id="image" class="form-control file-upload-info"/>
                             </div>
                         </div>
                         <div class="col-md-12">
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Thư viện ảnh</label>
+                                <div class="col-sm-10"></div>
+                                <div class="col-sm-5 col-form-label">
+                                    <div class="col-md-12">
+                                        <div class="row" id="photo_preview"></div>
+                                    </div>
+                                    <div class="upload-btn-wrapper row">
+                                        <input type="text" name="photo_gallery" id="photo_gallery" hidden>
+                                        <div class="col-3 text-primary btn-fw" id="btnAddPhoto">Thêm ảnh</div>
+                                        <a class="btn-link" style="display: none;" id="loading">Đang tải</a>
+                                        <p id="count"></p>
+                                        <input type="file" name="photo" id="photo" class="file" multiple />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- <div class="col-md-12">
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Thư viện ảnh</label>
                                 <div class="col-sm-10"></div>
@@ -52,7 +91,7 @@
                                 </div>
                                 
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-md-12">
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Danh mục Bất động sản</label>
@@ -136,38 +175,6 @@
                     <button type="submit" class="btn btn-primary me-2">Thêm mới</button>
                     <button class="btn btn-light">Hủy</button>
                     </form>
-                    <?php //Hiển thị thông báo thành công?>
-                    @if ( Session::has('success') )
-                        <div class="alert alert-success alert-dismissible" role="alert">
-                            <strong>{{ Session::get('success') }}</strong>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                <span class="sr-only">Close</span>
-                            </button>
-                        </div>
-                    @endif
-                    <?php //Hiển thị thông báo lỗi?>
-                    @if ( Session::has('error') )
-                        <div class="alert alert-danger alert-dismissible" role="alert">
-                            <strong>{{ Session::get('error') }}</strong>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                <span class="sr-only">Close</span>
-                            </button>
-                        </div>
-                    @endif
-                    <!-- -->
-                    @if ($errors->any())
-                        <div class="alert alert-danger alert-dismissible" role="alert">
-                                @foreach ($errors->all() as $error)
-                                    <p>{{ $error }}</p>
-                                @endforeach
-                            <button type="button" class="close btn-outline-danger btn-fw" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                <span class="sr-only">Close</span>
-                            </button>
-                        </div>
-                    @endif
                 </div>
                 </div>
             </div> 
