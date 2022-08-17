@@ -65,17 +65,17 @@
                                 <div class="col-sm-5 col-form-label">
                                     <div class="col-md-12">
                                         <div class="row" id="photo_preview">
-                                            @foreach (json_decode($photo_gallery) as $item)
+                                            {{-- @foreach (json_decode($photo_gallery) as $item)
                                                     <div class="col-4 mt-1" style="position: relative;">
                                                         <i data-id="{{$item->id}}" class="mdi mdi-close-circle delete" style="position: absolute;top: 0;right: 0;transform: translateX(-75%);"></i>
                                                         <img src="{{$item->src}}" class="img-thumbnail" />
                                                     </div>
-                                            @endforeach
+                                            @endforeach --}}
                                         </div>
                                     </div>
                                     <div class="upload-btn-wrapper row">
-                                        <input type="text" name="photo_gallery" id="photo_gallery" hidden>
-                                        <div class="col-3 text-primary btn-fw" id="btnAddMainPhoto">Thêm ảnh</div>
+                                        <input type="text" name="photo_gallery" value="{{$realty->photo_gallery}}" id="photo_gallery" hidden>
+                                        <div class="col-3 text-primary btn-fw" id="btnAddPhoto">Thêm ảnh</div>
                                         <p id="count"></p>
                                         <input type="file" name="photo" id="photo" class="file" multiple />
                                     </div>
@@ -174,4 +174,8 @@
 </div> 
 
 <script src="{{asset('auth/js/upload-photo.js')}}"></script>
+<script>
+    const photos = document.getElementById('photo_gallery').value;
+    console.log(photos);
+</script>
 @endsection

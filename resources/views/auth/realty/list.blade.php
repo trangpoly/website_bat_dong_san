@@ -39,8 +39,8 @@
                                     <td>{{$index ++}}</td>
                                     <td>{{$item->title}}</td>
                                     <td><img src="{{ url('storage/'.$item->image) }}" alt=""></td>
-                                    <td>{{$item->price}}</td>
-                                    <td>{{$item->category_realty_id}}</td>
+                                    <td>{{$item->price}} $</td>
+                                    <td>{{$item->category->title}}</td>
                                     <td><a href="{{route("route_Realty_Detail",$item->id)}}" class="hover-icon-active-del"><i class="mdi mdi-pen"></i></a></td>
                                     <td><a href="{{route("route_Realty_Remove",$item->id)}}" class="hover-icon-active-edit"><i class="mdi mdi-delete"></i></a></td>
                                 </tr>

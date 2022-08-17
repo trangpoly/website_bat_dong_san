@@ -18,13 +18,14 @@ class CateRealty extends Model
     public function LoadListWithPager($params=[]){
         $query = DB::table($this->table)
                 ->select($this->fillable)
-                ->where('status',0);;
+                ->where('status',0);
         $listCateRealty = $query->paginate(5);
         return $listCateRealty;
     }
     public function LoadList($params=[]){
         $listCate = DB::table($this->table)
                 ->select($this->fillable)
+                ->where('status',0)
                 ->get();
         return $listCate;
     }

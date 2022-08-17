@@ -23,9 +23,10 @@
                             <p>{{ Session::get('error') }}</p>
                         </div>
                     @endif
-                    @if ($objUser->role==0)
+                    {{-- @if ($objUser->role==0)
                         <a href="{{route('route_User_Add')}}" class="btn btn-outline-primary btn-fw">Thêm mới</a>
-                    @endif
+                    @endif --}}
+                        <a href="{{route('route_User_Detail',$objUser->id)}}" class="btn btn-outline-primary btn-fw">Cập nhật tài khoản của bạn</a>
                     <div class="table-responsive">
                         <table class="table table-hover">
                         <thead>

@@ -1,3 +1,6 @@
+@php
+    $objUser = \Illuminate\Support\Facades\Auth::user();
+@endphp
 @extends('auth.layout')
 @section('title',$title)
 @section('content')
@@ -65,6 +68,10 @@
                                 </select>
                             </div>
                         </div>
+                        @if ($objUser->role==0)
+                            <button type="submit" class="btn btn-primary me-2">Cập nhật</button>
+                            <button class="btn btn-light">Hủy</button>
+                        @endif
                         {{-- <button type="submit" class="btn btn-primary me-2">Cập nhật</button>
                         <button class="btn btn-light">Hủy</button> --}}
                     </form>

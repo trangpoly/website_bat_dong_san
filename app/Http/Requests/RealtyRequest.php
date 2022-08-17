@@ -31,7 +31,7 @@ class RealtyRequest extends FormRequest
                 switch ($currentAction){
                     case 'add':
                         $rules = [
-                            'title' => "required|unique:realty", 
+                            'title' => "required", 
                             'price' => "required",
                             'bed' => "required",
                             'bath' => "required",

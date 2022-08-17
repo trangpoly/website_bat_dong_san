@@ -67,9 +67,8 @@
                                     <div class="upload-btn-wrapper row">
                                         <input type="text" name="photo_gallery" id="photo_gallery" hidden>
                                         <div class="col-3 text-primary btn-fw" id="btnAddPhoto">Thêm ảnh</div>
-                                        <a class="btn-link" style="display: none;" id="loading">Đang tải</a>
                                         <p id="count"></p>
-                                        <input type="file" name="photo" id="photo" class="file" multiple />
+                                        <input type="file" name="photo[]" id="photo" class="file" multiple />
                                     </div>
                                 </div>
                             </div>

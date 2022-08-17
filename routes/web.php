@@ -68,7 +68,8 @@ Route::middleware(['auth'])->prefix('/admin')->group(function(){
         Route::get('user/remove/{id}','App\Http\Controllers\Auth\UserController@remove')->name('route_User_Remove');
 });
 
-Route::get('/','App\Http\Controllers\Client\HomeController@index');
-Route::get('/realty','App\Http\Controllers\Client\RealtyController@index');
-Route::get('/realty-detail','App\Http\Controllers\Client\RealtyController@realtyDetail');
-Route::get('/news','App\Http\Controllers\Client\NewController@index');
+Route::get('/','App\Http\Controllers\Client\HomeController@index')->name('route_FE');
+Route::get('/realty/{id}','App\Http\Controllers\Client\RealtyController@index')->name('route_FE_Realty');
+Route::get('/realty-detail/{id}','App\Http\Controllers\Client\RealtyController@realtyDetail')->name('route_FE_Realty_Detail');
+Route::get('/news/{id}','App\Http\Controllers\Client\NewController@index')->name('route_FE_New');
+Route::get('/news-detail/{id}','App\Http\Controllers\Client\NewController@newDetail')->name('route_FE_New_Detail');

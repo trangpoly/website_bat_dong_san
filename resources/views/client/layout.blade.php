@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Homeland &mdash; Colorlib Website Template</title>
+    <title>@yield('title')</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -44,7 +44,7 @@
           <div class="container py-1">
             <div class="row align-items-center">
               <div class="col-4 col-md-8 col-lg-4">
-                <h1 class="mb-0"><a href="index.html" class="text-white h2 mb-0"><strong>Homeland<span class="text-danger">.</span></strong></a></h1>
+                <h1 class="mb-0"><a href="{{route('route_FE')}}" class="text-white h2 mb-0"><strong>Homeland<span class="text-danger">.</span></strong></a></h1>
               </div>
               <div class="col-8 col-md-4 col-lg-8">
                 <nav class="site-navigation text-right text-md-right" role="navigation">
@@ -56,19 +56,19 @@
                       <a href="{{url('/')}}">Trang chủ</a>
                     </li>
                     <li class="has-children">
-                      <a href="{{url('/realty')}}">Bất động sản</a>
+                      <a href="{{route("route_FE_Realty",0)}}">Bất động sản</a>
                       <ul class="dropdown arrow-top">
-                        <li><a href="#">Danh mục 1</a></li>
-                        <li><a href="#">Danh mục 2</a></li>
-                        <li><a href="#">Danh mục 3</a></li>
+                        @foreach ($cateRealty as $item)
+                          <li><a href="{{route("route_FE_Realty",$item->id)}}">{{$item->title}}</a></li>
+                        @endforeach
                       </ul>
                     </li>
                     <li class="has-children">
-                      <a href="{{url('/news')}}">Tin tức</a>
+                      <a href="{{route('route_FE_New',0)}}">Tin tức</a>
                       <ul class="dropdown arrow-top">
-                        <li><a href="#">Danh mục 1</a></li>
-                        <li><a href="#">Danh mục 2</a></li>
-                        <li><a href="#">Danh mục 3</a></li>
+                        @foreach ($cateNew as $item)
+                          <li><a href="{{route('route_FE_New_Detail',0)}}">{{$item->title}}</a></li>
+                        @endforeach
                       </ul>
                     </li>
                     <div></div>

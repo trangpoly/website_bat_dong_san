@@ -7,6 +7,7 @@ use App\Http\Requests\RealtyRequest;
 use App\Models\CateRealty;
 use App\Models\Realty;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class RealtyController extends Controller
@@ -94,7 +95,7 @@ class RealtyController extends Controller
             return $item;
         }, 
         $request->post());
-        // dd($params['cols']['content']);
+        // dd($params['cols']['photo_gallery']);
         unset($params['cols']['_token']);
         if($request->hasFile('image') && $request->file('image')){
             $params['cols']['image'] = $this->uploadFile($request->file('image'));

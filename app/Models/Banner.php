@@ -14,7 +14,13 @@ class Banner extends Model
     protected $table = 'banners';
     protected $fillable = ['id', 'title', 'image', 'desc', 'status'];
 
-
+    public function getAll(){
+        $banners = DB::table($this->table)
+                ->select($this->fillable)
+                ->where('status',0)
+                ->get();
+        return $banners;
+    }
     public function LoadListWithPager($params=[]){
         $query = DB::table($this->table)
                 ->select($this->fillable)

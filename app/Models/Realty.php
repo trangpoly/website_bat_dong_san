@@ -19,11 +19,25 @@ class Realty extends Model
     }
 
     public function LoadListWithPager($params=[]){
-        $query = DB::table($this->table)
+        $query = Realty::with('category')
                 ->select($this->fillable)
                 ->where('status',0);
         $listRealty = $query->paginate(5);
         return $listRealty;
+    }
+    public function getAll(){
+        $banners = DB::table($this->table)
+                ->select($this->fillable)
+                ->where('status',0)
+                ->get();
+        return $banners;
+    }
+    public function filterRealty($id){
+        $realty = DB::table($this->table)
+                ->select($this->fillable)
+                ->where('category_realty_id',$id)
+                ->get();
+        return $realty;
     }
     //ADD
     public function saveNew($params=[]){

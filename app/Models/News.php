@@ -12,7 +12,7 @@ class News extends Model
 {
     use HasFactory;
     protected $table = 'news';
-    protected $fillable = ['id', 'title', 'image', 'content', 'category_new_id', 'status'];
+    protected $fillable = ['id', 'title', 'image', 'content', 'category_new_id', 'status', 'updated_at'];
 
 
     public function LoadListWithPager($params=[]){
@@ -22,7 +22,13 @@ class News extends Model
         $listNew = $query->paginate(5);
         return $listNew;
     }
-
+    public function getAll(){
+        $banners = News::with('category')
+                ->select($this->fillable)
+                ->where('status',0)
+                ->get();
+        return $banners;
+    }
     public function category(){
         return $this->belongsTo(CateNew::class,'category_new_id');
     }

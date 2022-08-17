@@ -69,7 +69,9 @@
             <h1 class="welcome-text">Xin chào, <span class="text-black fw-bold">{{$objUser->name}}</span></h1>
             <h3 class="welcome-sub-text">{{$objUser->email}}</h3>
           </li>
+          
         </ul>
+        
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-bs-toggle="offcanvas">
           <span class="mdi mdi-menu"></span>
         </button>
@@ -350,7 +352,7 @@
     ClassicEditor
     .create( document.querySelector( '#editor' ), {
     ckbox: {
-    tokenUrl: "https://90995.cke-cs.com/token/dev/KV1ibI6ewROOAPQkhUdwFlgyILLwxfI1GuyZ?limit=10",
+    tokenUrl: "https://90995.cke-cs.com/token/dev/300facf41f2c21dbfb4ac0fdc4dc6f315397fb001c202229474bba2f974d?limit=10",
     },
     toolbar: [
     'ckbox', 'imageUpload', 'mediaEmbed', 'audioUpload', 
